@@ -1,0 +1,142 @@
+@import "../../variables.module.scss";
+
+.header {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 109px 109px;
+  // gap: 19px;
+  width: 100%;
+  height: 80px;
+  background-color: $ARTICLES_GENERAL_BACKGROUND_COLOR;
+  margin: 0 0 26px;
+  box-sizing: border-box;
+  padding: 22px;
+}
+
+.headers-heading {
+  position: relative;
+  margin: 0;
+  font-family: $DEFAULT_FONT;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  padding-top: 4px;
+}
+
+.headers-button {
+  @include buttonDefaultStyle;
+  box-sizing: border-box;
+  width: 84px;
+  height: 35px;
+  float: right;
+  padding: 10px;
+}
+
+.articles {
+}
+
+.article {
+  max-width: 941px;
+  display: flex;
+  height: 140px;
+  box-sizing: border-box;
+  background-color: $ARTICLES_GENERAL_BACKGROUND_COLOR;
+  margin: 0 auto;
+  margin-bottom: 26px;
+  padding: 15px 19px;
+}
+
+.article-title {
+  margin: 0;
+  width: 160px;
+  height: 28px;
+  font-size: 20px;
+  line-height: 28px;
+  // border: 1px solid black;
+  // background-color: burlywood;
+}
+
+.likes {
+  position: absolute;
+  width: 16px;
+  height: 15px;
+  left: 189px;
+  top: 6px;
+  font-size: 12px;
+  &::before {
+    content: url("../../img/heart-vector.png");
+    position: absolute;
+    width: 16px;
+    height: 15px;
+    right: 19px;
+  }
+}
+
+.tags-container {
+  margin-bottom: 4px;
+}
+
+.tag {
+  display: inline-block;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 2px;
+  color: $ARTICLE_TAGS_TEXT_DEFAULT_COLOR;
+  border: 1px solid $ARTICLE_TAGS_BORDED_DEFAULT_COLOR;
+  margin-right: 8px;
+}
+
+.message-text {
+  border: 1px solid black;
+}
+
+.message-block {
+  position: relative;
+  // display: block;
+  margin: 0;
+  padding-right: 85px;
+  max-width: calc(700px - 85px);
+  flex-grow: 3;
+  // background-color: red;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  padding-right: 12px;
+  margin: 0;
+  width: 210px;
+  box-sizing: border-box;
+  // background-color: royalblue;
+}
+
+.user-name {
+  text-align: right;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  /* identical to box height, or 156% */
+
+  // display: flex;
+  // align-items: center;
+}
+
+.user-birth-date {
+  text-align: right;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+}
