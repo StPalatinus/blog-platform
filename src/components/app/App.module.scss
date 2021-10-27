@@ -29,17 +29,18 @@
   box-sizing: border-box;
   width: 84px;
   height: 35px;
-  float: right;
-  padding: 10px;
+  // float: right;
+  // padding: 10px;
 }
 
 .articles {
+  min-height: 500px;
 }
 
 .article {
   max-width: 941px;
   display: flex;
-  height: 140px;
+  min-height: 120px;
   box-sizing: border-box;
   background-color: $ARTICLES_GENERAL_BACKGROUND_COLOR;
   margin: 0 auto;
@@ -53,8 +54,6 @@
   height: 28px;
   font-size: 20px;
   line-height: 28px;
-  // border: 1px solid black;
-  // background-color: burlywood;
 }
 
 .likes {
@@ -91,17 +90,19 @@
 }
 
 .message-text {
-  border: 1px solid black;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
+  // border: 1px solid black;
 }
 
 .message-block {
   position: relative;
-  // display: block;
   margin: 0;
   padding-right: 85px;
   max-width: calc(700px - 85px);
   flex-grow: 3;
-  // background-color: red;
 }
 
 .user-info {
@@ -111,7 +112,6 @@
   margin: 0;
   width: 210px;
   box-sizing: border-box;
-  // background-color: royalblue;
 }
 
 .user-name {
@@ -121,10 +121,6 @@
   font-weight: normal;
   font-size: 18px;
   line-height: 28px;
-  /* identical to box height, or 156% */
-
-  // display: flex;
-  // align-items: center;
 }
 
 .user-birth-date {
@@ -139,4 +135,13 @@
 .avatar {
   width: 46px;
   height: 46px;
+}
+
+.footer {
+  text-align: center;
+  padding: 0 0 24px 0;
+}
+
+.pagination {
+  margin: 0 auto;
 }

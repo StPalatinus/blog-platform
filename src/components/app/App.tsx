@@ -1,26 +1,38 @@
 import React from "react";
+import { Pagination } from "antd";
 import appStyles from "./App.module.scss";
 import avatarPlaceholder from "../../img/devault-avatar.png";
-// import likesVector from "../../img/likes-vector.png";
+import herokuAppService from "../../services/herokuapp-service";
+
+// const API_KEY = process.env.REACT_APP_APY_KEY;
+// const APIURLT = process.env.APIURL;
 
 function App(): React.ReactElement | null {
   // App.dafeultProps = {};
+
+  const aaa = "test";
+  console.log(aaa);
+
+  const { getArticles } = herokuAppService;
+
+  const articles = getArticles();
+  console.log(articles);
 
   return (
     <>
       <header className={appStyles.header}>
         <h1 className={appStyles["headers-heading"]}>Realworld Blog</h1>
-        <button 
+        <button
           type="button"
           className={appStyles["headers-button"]}
-          onClick={()=> {}}
+          onClick={() => {}}
         >
           Sign In
         </button>
-        <button 
+        <button
           type="button"
           className={appStyles["headers-button"]}
-          onClick={()=> {}}
+          onClick={() => {}}
         >
           Sign Up
         </button>
@@ -36,15 +48,22 @@ function App(): React.ReactElement | null {
               <span className={appStyles.tag}>Tag3 test</span>
             </div>
             <div className={appStyles["message-text"]}>
-              article text article text article text article text article text article text 
-              article text article text article text article text article text article text 
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text article text article text
             </div>
           </figure>
           <figure className={appStyles["user-info"]}>
             <span className={appStyles["user-name"]}>John Doe</span>
             <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
           </figure>
-          <img className={appStyles.avatar} src={avatarPlaceholder} alt="User Avatar" />
+          <img
+            className={appStyles.avatar}
+            src={avatarPlaceholder}
+            alt="User Avatar"
+          />
         </article>
         <article className={appStyles.article}>
           <figure className={appStyles["message-block"]}>
@@ -56,15 +75,20 @@ function App(): React.ReactElement | null {
               <span className={appStyles.tag}>Tag3 test</span>
             </div>
             <div className={appStyles["message-text"]}>
-              article text article text article text article text article text article text 
-              article text article text article text article text article text article text 
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text
             </div>
           </figure>
           <figure className={appStyles["user-info"]}>
             <span className={appStyles["user-name"]}>John Doe</span>
             <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
           </figure>
-          <img className={appStyles.avatar} src={avatarPlaceholder} alt="User Avatar" />
+          <img
+            className={appStyles.avatar}
+            src={avatarPlaceholder}
+            alt="User Avatar"
+          />
         </article>
         <article className={appStyles.article}>
           <figure className={appStyles["message-block"]}>
@@ -76,15 +100,20 @@ function App(): React.ReactElement | null {
               <span className={appStyles.tag}>Tag3 test</span>
             </div>
             <div className={appStyles["message-text"]}>
-              article text article text article text article text article text article text 
-              article text article text article text article text article text article text 
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text
             </div>
           </figure>
           <figure className={appStyles["user-info"]}>
             <span className={appStyles["user-name"]}>John Doe</span>
             <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
           </figure>
-          <img className={appStyles.avatar} src={avatarPlaceholder} alt="User Avatar" />
+          <img
+            className={appStyles.avatar}
+            src={avatarPlaceholder}
+            alt="User Avatar"
+          />
         </article>
         <article className={appStyles.article}>
           <figure className={appStyles["message-block"]}>
@@ -96,15 +125,20 @@ function App(): React.ReactElement | null {
               <span className={appStyles.tag}>Tag3 test</span>
             </div>
             <div className={appStyles["message-text"]}>
-              article text article text article text article text article text article text 
-              article text article text article text article text article text article text 
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text
             </div>
           </figure>
           <figure className={appStyles["user-info"]}>
             <span className={appStyles["user-name"]}>John Doe</span>
             <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
           </figure>
-          <img className={appStyles.avatar} src={avatarPlaceholder} alt="User Avatar" />
+          <img
+            className={appStyles.avatar}
+            src={avatarPlaceholder}
+            alt="User Avatar"
+          />
         </article>
         <article className={appStyles.article}>
           <figure className={appStyles["message-block"]}>
@@ -116,18 +150,29 @@ function App(): React.ReactElement | null {
               <span className={appStyles.tag}>Tag3 test</span>
             </div>
             <div className={appStyles["message-text"]}>
-              article text article text article text article text article text article text 
-              article text article text article text article text article text article text 
+              article text article text article text article text article text
+              article text article text article text article text article text
+              article text article text
             </div>
           </figure>
           <figure className={appStyles["user-info"]}>
             <span className={appStyles["user-name"]}>John Doe</span>
             <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
           </figure>
-          <img className={appStyles.avatar} src={avatarPlaceholder} alt="User Avatar" />
+          <img
+            className={appStyles.avatar}
+            src={avatarPlaceholder}
+            alt="User Avatar"
+          />
         </article>
-        {/* <article className={appStyles.article}>SIXTH ARTICLE</article> */}
-    </section>
+      </section>
+      <footer className={appStyles.footer}>
+        <Pagination
+          className={appStyles.pagination}
+          defaultCurrent={1}
+          total={50}
+        />
+      </footer>
     </>
   );
 }
