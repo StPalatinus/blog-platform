@@ -1,5 +1,18 @@
 @import "../../variables.module.scss";
 
+@mixin tag-default-style {
+  display: inline-block;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 2px;
+  box-sizing: border-box;
+  color: $ARTICLE_TAGS_TEXT_DEFAULT_COLOR;
+  margin-right: 8px;
+}
+
 .header {
   position: relative;
   display: grid;
@@ -17,6 +30,7 @@
   position: relative;
   margin: 0;
   font-family: $DEFAULT_FONT;
+  color: $GENRAL_HEADER_COLOR;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -29,12 +43,11 @@
   box-sizing: border-box;
   width: 84px;
   height: 35px;
-  // float: right;
-  // padding: 10px;
 }
 
 .articles {
   min-height: 500px;
+  // max-height: calc(100% - 116px);
 }
 
 .article {
@@ -76,17 +89,24 @@
   margin-bottom: 4px;
 }
 
-.tag {
-  display: inline-block;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 15px;
-  padding: 2px;
-  color: $ARTICLE_TAGS_TEXT_DEFAULT_COLOR;
+.tag-empty {
+  @include tag-default-style;
+}
+
+.tag-full {
+  @include tag-default-style;
   border: 1px solid $ARTICLE_TAGS_BORDED_DEFAULT_COLOR;
-  margin-right: 8px;
+}
+
+.spinner {
+  position: relative;
+  left: 30%;
+  width: 40%;
+  max-height: 400px;
+  // height: calc(20% - 116px);
+  // text-align: center;
+  object-fit: contain;
+  margin-bottom: 26px;
 }
 
 .message-text {
@@ -138,6 +158,10 @@
 }
 
 .footer {
+  position: relative;
+  width: 272px;
+  left: calc(50% - 136px);
+  bottom: 0;
   text-align: center;
   padding: 0 0 24px 0;
 }

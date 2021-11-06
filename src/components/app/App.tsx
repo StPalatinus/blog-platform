@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
+// import format from "date-fns/format";
+// import { ru } from "date-fns/locale";
+import { v4 as uuidv4 } from "uuid";
 import { Pagination } from "antd";
 import appStyles from "./App.module.scss";
 import avatarPlaceholder from "../../img/devault-avatar.png";
 import herokuAppService from "../../services/herokuapp-service";
+
+import spinner from "../../img/loading_spinner.gif";
 
 // const API_KEY = process.env.REACT_APP_APY_KEY;
 // const APIURLT = process.env.APIURL;
@@ -10,13 +15,151 @@ import herokuAppService from "../../services/herokuapp-service";
 function App(): React.ReactElement | null {
   // App.dafeultProps = {};
 
-  const aaa = "test";
-  console.log(aaa);
+  interface StateType {
+    isLoading: boolean;
+    recievedArticles: Artickle[];
+    currentPage: number;
+    articlesPerPage: number;
+  }
+
+  type Artickle = {
+    UserEmail: string;
+    author: {
+      username: string;
+      email: string | null;
+      bio: string | null;
+      image: string | null;
+    };
+    slug: string;
+    title: string;
+    description: string;
+    body: string;
+    createdAt: string | Date;
+    updatedAt: string | Date;
+    tagList: string[];
+  };
+
+  const [state, setState] = useState<StateType>({
+    isLoading: false,
+    recievedArticles: [],
+    currentPage: 1,
+    articlesPerPage: 5,
+  });
 
   const { getArticles } = herokuAppService;
 
-  const articles = getArticles();
-  console.log(articles);
+  const getArticlesPack = useCallback(
+    async (articlesPerPage, currentPage) => {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+      const posts = await getArticles(articlesPerPage, currentPage);
+      console.log(posts);
+      setState((prevState) => ({
+        ...prevState,
+        recievedArticles: posts,
+        isLoading: false,
+      }));
+      return posts;
+    },
+    [getArticles]
+  );
+
+  // let posts;
+
+  useEffect(() => {
+    (async () => {
+      // setState((prevState) => ({
+      //   ...prevState,
+      //   isLoading: true,
+      // }));
+      await getArticlesPack(state.articlesPerPage, state.currentPage);
+      // console.log(posts);
+      // setState((prevState) => ({
+      //   ...prevState,
+      //   recievedArticles: posts,
+      //   isLoading: false,
+      // }));
+
+      // return posts;
+    })();
+
+    // console.log(articles);
+  }, [getArticlesPack, state.articlesPerPage, state.currentPage]);
+
+  function onChange(pageNumber: number) {
+    // console.log("Page: ", pageNumber);
+    setState((prevState) => ({
+      ...prevState,
+      currentPage: pageNumber,
+      isLoading: true,
+    }));
+    // setState((prevState) => ({
+    //   ...prevState,
+    //   recievedArticles: getArticles(),
+    // }));
+  }
+
+  const renderedData = !state.isLoading ? (
+    state.recievedArticles.map((currentArticle) => {
+      console.log(currentArticle);
+
+      const tags =
+        currentArticle.tagList.length !== 0 ? (
+          currentArticle.tagList.map((currenTag) => (
+            <span className={appStyles["tag-full"]} key={uuidv4()}>
+              {currenTag}
+            </span>
+          ))
+        ) : (
+          <span className={appStyles["tag-empty"]} />
+        );
+
+      return (
+        <article className={appStyles.article} key={uuidv4()}>
+          <figure className={appStyles["message-block"]}>
+            <h2 className={appStyles["article-title"]}>
+              {currentArticle.title}
+            </h2>
+            <div className={appStyles.likes}>12</div>
+            <div className={appStyles["tags-container"]}>{tags}</div>
+            <div className={appStyles["message-text"]}>
+              {currentArticle.body}
+            </div>
+          </figure>
+          <figure className={appStyles["user-info"]}>
+            <span className={appStyles["user-name"]}>
+              {currentArticle.author.username}
+            </span>
+            <span className={appStyles["user-birth-date"]}>
+              {/* {currentArticle.createdAt} */}
+              March 5, 2020
+            </span>
+          </figure>
+          <img
+            className={appStyles.avatar}
+            src={currentArticle.author.image || avatarPlaceholder}
+            alt="User Avatar"
+          />
+        </article>
+      );
+    })
+  ) : (
+    // <div className={appStyles.spinner}>
+    <img className={appStyles.spinner} src={spinner} alt="Загрузка" />
+    // </div>
+  );
+
+  const paginationNav = !state.isLoading ? (
+    <Pagination
+      className={appStyles.pagination}
+      defaultCurrent={1}
+      current={state.currentPage}
+      total={50}
+      onChange={onChange}
+    />
+  ) : null;
 
   return (
     <>
@@ -37,142 +180,8 @@ function App(): React.ReactElement | null {
           Sign Up
         </button>
       </header>
-      <section className={appStyles.articles}>
-        <article className={appStyles.article}>
-          <figure className={appStyles["message-block"]}>
-            <h2 className={appStyles["article-title"]}>Some article title</h2>
-            <div className={appStyles.likes}>12</div>
-            <div className={appStyles["tags-container"]}>
-              <span className={appStyles.tag}>Tag1</span>
-              <span className={appStyles.tag}>Tag2 long</span>
-              <span className={appStyles.tag}>Tag3 test</span>
-            </div>
-            <div className={appStyles["message-text"]}>
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text article text article text
-            </div>
-          </figure>
-          <figure className={appStyles["user-info"]}>
-            <span className={appStyles["user-name"]}>John Doe</span>
-            <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
-          </figure>
-          <img
-            className={appStyles.avatar}
-            src={avatarPlaceholder}
-            alt="User Avatar"
-          />
-        </article>
-        <article className={appStyles.article}>
-          <figure className={appStyles["message-block"]}>
-            <h2 className={appStyles["article-title"]}>Some article title</h2>
-            <div className={appStyles.likes}>12</div>
-            <div className={appStyles["tags-container"]}>
-              <span className={appStyles.tag}>Tag1</span>
-              <span className={appStyles.tag}>Tag2 long</span>
-              <span className={appStyles.tag}>Tag3 test</span>
-            </div>
-            <div className={appStyles["message-text"]}>
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text
-            </div>
-          </figure>
-          <figure className={appStyles["user-info"]}>
-            <span className={appStyles["user-name"]}>John Doe</span>
-            <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
-          </figure>
-          <img
-            className={appStyles.avatar}
-            src={avatarPlaceholder}
-            alt="User Avatar"
-          />
-        </article>
-        <article className={appStyles.article}>
-          <figure className={appStyles["message-block"]}>
-            <h2 className={appStyles["article-title"]}>Some article title</h2>
-            <div className={appStyles.likes}>12</div>
-            <div className={appStyles["tags-container"]}>
-              <span className={appStyles.tag}>Tag1</span>
-              <span className={appStyles.tag}>Tag2 long</span>
-              <span className={appStyles.tag}>Tag3 test</span>
-            </div>
-            <div className={appStyles["message-text"]}>
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text
-            </div>
-          </figure>
-          <figure className={appStyles["user-info"]}>
-            <span className={appStyles["user-name"]}>John Doe</span>
-            <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
-          </figure>
-          <img
-            className={appStyles.avatar}
-            src={avatarPlaceholder}
-            alt="User Avatar"
-          />
-        </article>
-        <article className={appStyles.article}>
-          <figure className={appStyles["message-block"]}>
-            <h2 className={appStyles["article-title"]}>Some article title</h2>
-            <div className={appStyles.likes}>12</div>
-            <div className={appStyles["tags-container"]}>
-              <span className={appStyles.tag}>Tag1</span>
-              <span className={appStyles.tag}>Tag2 long</span>
-              <span className={appStyles.tag}>Tag3 test</span>
-            </div>
-            <div className={appStyles["message-text"]}>
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text
-            </div>
-          </figure>
-          <figure className={appStyles["user-info"]}>
-            <span className={appStyles["user-name"]}>John Doe</span>
-            <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
-          </figure>
-          <img
-            className={appStyles.avatar}
-            src={avatarPlaceholder}
-            alt="User Avatar"
-          />
-        </article>
-        <article className={appStyles.article}>
-          <figure className={appStyles["message-block"]}>
-            <h2 className={appStyles["article-title"]}>Some article title</h2>
-            <div className={appStyles.likes}>12</div>
-            <div className={appStyles["tags-container"]}>
-              <span className={appStyles.tag}>Tag1</span>
-              <span className={appStyles.tag}>Tag2 long</span>
-              <span className={appStyles.tag}>Tag3 test</span>
-            </div>
-            <div className={appStyles["message-text"]}>
-              article text article text article text article text article text
-              article text article text article text article text article text
-              article text article text
-            </div>
-          </figure>
-          <figure className={appStyles["user-info"]}>
-            <span className={appStyles["user-name"]}>John Doe</span>
-            <span className={appStyles["user-birth-date"]}>March 5, 2020</span>
-          </figure>
-          <img
-            className={appStyles.avatar}
-            src={avatarPlaceholder}
-            alt="User Avatar"
-          />
-        </article>
-      </section>
-      <footer className={appStyles.footer}>
-        <Pagination
-          className={appStyles.pagination}
-          defaultCurrent={1}
-          total={50}
-        />
-      </footer>
+      <section className={appStyles.articles}>{renderedData}</section>
+      <footer className={appStyles.footer}>{paginationNav}</footer>
     </>
   );
 }

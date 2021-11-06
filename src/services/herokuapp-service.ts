@@ -2,8 +2,9 @@ const BASE_URL = "https://conduit-api-realworld.herokuapp.com/api/";
 const ARTICLES = "articles";
 
 class HerokuAppService {
-  async getArticles() {
-    const searchUrl = `${BASE_URL}${ARTICLES}`;
+  async getArticles(limit: number, modifier: number) {
+    const skip = modifier * limit - limit;
+    const searchUrl = `${BASE_URL}${ARTICLES}?limit=${limit}&offset=${skip}`;
     const response = await fetch(searchUrl);
 
     if (!response.ok) {
@@ -14,7 +15,7 @@ class HerokuAppService {
 
     const body = await response.json();
 
-    return body;
+    return body.articles;
   }
 }
 
