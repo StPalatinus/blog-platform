@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 // import format from "date-fns/format";
 // import { ru } from "date-fns/locale";
-import { v4 as uuidv4 } from "uuid";
 import { Pagination } from "antd";
 import appStyles from "./App.module.scss";
-import avatarPlaceholder from "../../img/devault-avatar.png";
 import herokuAppService from "../../services/herokuapp-service";
 
-import spinner from "../../img/loading_spinner.gif";
+import Articles from "./articles";
 
 // const API_KEY = process.env.REACT_APP_APY_KEY;
 // const APIURLT = process.env.APIURL;
@@ -37,6 +35,7 @@ function App(): React.ReactElement | null {
     createdAt: string | Date;
     updatedAt: string | Date;
     tagList: string[];
+    favoritesCount: number;
   };
 
   const [state, setState] = useState<StateType>({
@@ -101,56 +100,6 @@ function App(): React.ReactElement | null {
     // }));
   }
 
-  const renderedData = !state.isLoading ? (
-    state.recievedArticles.map((currentArticle) => {
-      console.log(currentArticle);
-
-      const tags =
-        currentArticle.tagList.length !== 0 ? (
-          currentArticle.tagList.map((currenTag) => (
-            <span className={appStyles["tag-full"]} key={uuidv4()}>
-              {currenTag}
-            </span>
-          ))
-        ) : (
-          <span className={appStyles["tag-empty"]} />
-        );
-
-      return (
-        <article className={appStyles.article} key={uuidv4()}>
-          <figure className={appStyles["message-block"]}>
-            <h2 className={appStyles["article-title"]}>
-              {currentArticle.title}
-            </h2>
-            <div className={appStyles.likes}>12</div>
-            <div className={appStyles["tags-container"]}>{tags}</div>
-            <div className={appStyles["message-text"]}>
-              {currentArticle.body}
-            </div>
-          </figure>
-          <figure className={appStyles["user-info"]}>
-            <span className={appStyles["user-name"]}>
-              {currentArticle.author.username}
-            </span>
-            <span className={appStyles["user-birth-date"]}>
-              {/* {currentArticle.createdAt} */}
-              March 5, 2020
-            </span>
-          </figure>
-          <img
-            className={appStyles.avatar}
-            src={currentArticle.author.image || avatarPlaceholder}
-            alt="User Avatar"
-          />
-        </article>
-      );
-    })
-  ) : (
-    // <div className={appStyles.spinner}>
-    <img className={appStyles.spinner} src={spinner} alt="Загрузка" />
-    // </div>
-  );
-
   const paginationNav = !state.isLoading ? (
     <Pagination
       className={appStyles.pagination}
@@ -180,7 +129,11 @@ function App(): React.ReactElement | null {
           Sign Up
         </button>
       </header>
-      <section className={appStyles.articles}>{renderedData}</section>
+      {/* <section className={appStyles.articles}>{renderedData}</section> */}
+      <Articles
+        isLoading={state.isLoading}
+        recievedArticles={state.recievedArticles}
+      />
       <footer className={appStyles.footer}>{paginationNav}</footer>
     </>
   );
