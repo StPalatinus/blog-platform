@@ -52,7 +52,7 @@ function Articles(props: Partial<StateType>): React.ReactElement {
             <h2 className={appStyles["article-title"]}>
               {currentArticle.title}
             </h2>
-            <div className={appStyles.likes}>12</div>
+            <div className={appStyles.likes}>0</div>
             <div className={appStyles["tags-container"]}>{tags}</div>
             <div className={appStyles["message-text"]}>
               {currentArticle.body}
