@@ -3,7 +3,7 @@ $ARTICLES_GENERAL_BACKGROUND_COLOR: #fff;
 $HEDING_BUTTONS_ACTION_COLOR: #52c41a;
 $ARTICLE_TAGS_TEXT_DEFAULT_COLOR: rgba(0, 0, 0, 0.5);
 $ARTICLE_TAGS_BORDED_DEFAULT_COLOR: rgba(0, 0, 0, 0.5);
-$GENRAL_HEADER_COLOR: #1890ff;
+$GENRAL_HEADER_COLOR: #000;
 
 @font-face {
   font-family: Inter;
@@ -11,6 +11,19 @@ $GENRAL_HEADER_COLOR: #1890ff;
 }
 
 $DEFAULT_FONT: Inter, Arial, Helvetica, sans-serif;
+
+@mixin tag-default-style {
+  display: inline-block;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 2px;
+  box-sizing: border-box;
+  color: $ARTICLE_TAGS_TEXT_DEFAULT_COLOR;
+  margin-right: 8px;
+}
 
 @mixin buttonDefaultStyle {
   background-color: #fff;

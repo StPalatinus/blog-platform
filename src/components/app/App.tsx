@@ -1,140 +1,97 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Routes, Route } from "react-router-dom";
 // import format from "date-fns/format";
 // import { ru } from "date-fns/locale";
-import { Pagination } from "antd";
-import appStyles from "./App.module.scss";
-import herokuAppService from "../../services/herokuapp-service";
+// import { Pagination } from "antd";
+// import appStyles from "./App.module.scss";
+import { getArticles } from "../../services/herokuapp-service";
+import { StateType } from "../../ts-types/types";
 
+import Header from "./header";
 import Articles from "./articles";
+import Footer from "./footer";
+import Article from "./article";
 
 // const API_KEY = process.env.REACT_APP_APY_KEY;
 // const APIURLT = process.env.APIURL;
 
 function App(): React.ReactElement | null {
-  // App.dafeultProps = {};
-
-  interface StateType {
-    isLoading: boolean;
-    recievedArticles: Artickle[];
-    currentPage: number;
-    articlesPerPage: number;
-  }
-
-  type Artickle = {
-    UserEmail: string;
-    author: {
-      username: string;
-      email: string | null;
-      bio: string | null;
-      image: string | null;
-    };
-    slug: string;
-    title: string;
-    description: string;
-    body: string;
-    createdAt: string | Date;
-    updatedAt: string | Date;
-    tagList: string[];
-    favoritesCount: number;
-  };
-
   const [state, setState] = useState<StateType>({
     isLoading: false,
     recievedArticles: [],
     currentPage: 1,
     articlesPerPage: 5,
+    activeArticle: null,
   });
 
-  const { getArticles } = herokuAppService;
-
-  const getArticlesPack = useCallback(
-    async (articlesPerPage, currentPage) => {
-      setState((prevState) => ({
-        ...prevState,
-        isLoading: true,
-      }));
-      const posts = await getArticles(articlesPerPage, currentPage);
-      console.log(posts);
-      setState((prevState) => ({
-        ...prevState,
-        recievedArticles: posts,
-        isLoading: false,
-      }));
-      return posts;
-    },
-    [getArticles]
-  );
+  const getArticlesPack = useCallback(async (articlesPerPage, currentPage) => {
+    setState((prevState) => ({
+      ...prevState,
+      isLoading: true,
+    }));
+    const posts = await getArticles(articlesPerPage, currentPage);
+    console.log(posts);
+    setState((prevState) => ({
+      ...prevState,
+      recievedArticles: posts,
+      isLoading: false,
+    }));
+    return posts;
+  }, []);
 
   // let posts;
 
   useEffect(() => {
     (async () => {
-      // setState((prevState) => ({
-      //   ...prevState,
-      //   isLoading: true,
-      // }));
       await getArticlesPack(state.articlesPerPage, state.currentPage);
-      // console.log(posts);
-      // setState((prevState) => ({
-      //   ...prevState,
-      //   recievedArticles: posts,
-      //   isLoading: false,
-      // }));
-
-      // return posts;
     })();
-
-    // console.log(articles);
   }, [getArticlesPack, state.articlesPerPage, state.currentPage]);
 
-  function onChange(pageNumber: number) {
-    // console.log("Page: ", pageNumber);
+  function onChange(pageNumber: number): void {
     setState((prevState) => ({
       ...prevState,
       currentPage: pageNumber,
       isLoading: true,
     }));
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   recievedArticles: getArticles(),
-    // }));
   }
-
-  const paginationNav = !state.isLoading ? (
-    <Pagination
-      className={appStyles.pagination}
-      defaultCurrent={1}
-      current={state.currentPage}
-      total={50}
-      onChange={onChange}
-    />
-  ) : null;
 
   return (
     <>
-      <header className={appStyles.header}>
-        <h1 className={appStyles["headers-heading"]}>Realworld Blog</h1>
-        <button
-          type="button"
-          className={appStyles["headers-button"]}
-          onClick={() => {}}
-        >
-          Sign In
-        </button>
-        <button
-          type="button"
-          className={appStyles["headers-button"]}
-          onClick={() => {}}
-        >
-          Sign Up
-        </button>
-      </header>
-      {/* <section className={appStyles.articles}>{renderedData}</section> */}
-      <Articles
-        isLoading={state.isLoading}
-        recievedArticles={state.recievedArticles}
-      />
-      <footer className={appStyles.footer}>{paginationNav}</footer>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route
+            path="/"
+            element={
+              <>
+                <Articles
+                  isLoading={state.isLoading}
+                  recievedArticles={state.recievedArticles}
+                  currentPage={state.currentPage}
+                />
+                <Footer
+                  isLoading={state.isLoading}
+                  currentPage={state.currentPage}
+                  articlesPerPage={state.articlesPerPage}
+                  onChange={onChange}
+                />
+              </>
+            }
+          />
+          <Route
+            path=":article"
+            element={
+              <Article
+                recievedArticles={state.recievedArticles}
+                // isLoading={state.isLoading}
+                // activeArticle={state.activeArticle}
+                // getArticleDetailed={getArticleDetailed}
+              />
+            }
+          />
+          <Route path="*" element={<div>NOTHING HERE</div>} />
+        </Route>
+        {/* <Route path="*" element={<div>GENERAL ERROR</div>} /> */}
+      </Routes>
     </>
   );
 }

@@ -1,38 +1,24 @@
 @import "../../../variables.module.scss";
 
-.link {
-  color: #000;
-  &:hover {
-    color: #000;
-  }
-  &:active {
-    color: #000;
-  }
-  &:visited {
-    color: #000;
-  }
-}
-.articles {
-  min-height: 500px;
+.articleFullPage {
+  min-height: calc(100vh - 166px);
 }
 
 .article {
-  display: flex;
   max-width: 941px;
-  min-height: 120px;
   box-sizing: border-box;
   background-color: $ARTICLES_GENERAL_BACKGROUND_COLOR;
   margin: 0 auto;
-  margin-bottom: 26px;
-  padding: 15px 19px;
+  // margin-bottom: 26px;
+  padding: 17px 19px;
 }
 
-.article-title {
-  margin: 0;
-  width: 160px;
-  height: 28px;
-  font-size: 20px;
-  line-height: 28px;
+.articleHeader {
+  display: flex;
+}
+
+.articleHeadingBlock {
+  position: relative;
 }
 
 .likes {
@@ -63,40 +49,32 @@
   @include tag-default-style;
   border: 1px solid $ARTICLE_TAGS_BORDED_DEFAULT_COLOR;
 }
+$variables: #1890ff;
 
-.message-text {
+.singleArticleHeading {
+  color: #1890ff;
+  font-family: $DEFAULT_FONT;
+  flex-basis: 200px;
+  flex-grow: 10;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 22px;
-}
-
-.message-block {
-  position: relative;
-  flex-grow: 1;
-  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
 }
 
 .user-info {
   display: flex;
   flex-direction: column;
-  width: 180px;
-  flex-grow: 0;
+  flex-grow: 10;
   padding-right: 12px;
   margin: 0;
+  width: 210px;
   box-sizing: border-box;
-}
-
-.avatar {
-  flex-grow: 0;
-  flex-basis: 46px;
-  width: 46px;
-  height: 46px;
 }
 
 .user-name {
   text-align: right;
-  font-family: Inter;
+  // font-family: Inter;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -105,9 +83,26 @@
 
 .user-birth-date {
   text-align: right;
-  font-family: Inter;
+  // font-family: Inter;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 22px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+}
+
+.articleDescription {
+  color: $ARTICLE_TAGS_TEXT_DEFAULT_COLOR;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 22px;
+  padding-bottom: 25px;
+}
+
+.articleFullText {
 }
