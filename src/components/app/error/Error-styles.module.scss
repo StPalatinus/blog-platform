@@ -1,0 +1,16 @@
+@import "../../../variables.module.scss";
+
+.error-block {
+  max-width: 941px;
+  min-height: calc(100vh - 166px);
+  box-sizing: border-box;
+  background-color: $ARTICLES_GENERAL_BACKGROUND_COLOR;
+  margin: 0 auto;
+  // margin-bottom: 26px;
+  padding: 15px 19px;
+}
+
+.error {
+  @include errorDefaultStyle;
+  text-align: center;
+}

@@ -44,3 +44,7 @@ $DEFAULT_FONT: Inter, Arial, Helvetica, sans-serif;
     border-color: $HEDING_BUTTONS_ACTION_COLOR;
   }
 }
+
+@mixin errorDefaultStyle {
+  color: crimson;
+}

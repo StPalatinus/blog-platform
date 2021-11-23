@@ -10,12 +10,6 @@ class HerokuAppService {
       const response = await fetch(searchUrl);
 
       try {
-        // if (!response.ok) {
-        //   throw new Error(
-        //     `Could not receive data from ${searchUrl} , received ${response.status}`
-        //   );
-        // }
-
         const body = await response.json();
 
         return body.articles;
@@ -37,6 +31,10 @@ class HerokuAppService {
       });
 
       if (!response.ok) {
+        // const error = new Error();
+        // error.name = `Error ${response.status}`;
+        // error.message = `Could not receive data from ${searchUrl} , received error ${response.status}`;
+        // throw error;
         throw new Error(
           `Could not receive data from ${searchUrl} , received error ${response.status}`
         );

@@ -11,6 +11,7 @@ import {
 
 import avatarPlaceholder from "../../../img/default-avatar.png";
 import Spinner from "../spinner";
+import Error from "../error";
 
 function SingleArticle(
   props: SingleArticlePropsType
@@ -44,14 +45,14 @@ function SingleArticle(
   const articleTextPlaceholder = "";
 
   const getArticleDetailed = useCallback(async (articleName, didAbort) => {
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: true,
-    }));
     let recievedArticle: { article: Article };
 
     const getArticleWithErrorCHecks = async () => {
       try {
+        setState((prevState) => ({
+          ...prevState,
+          isLoading: true,
+        }));
         recievedArticle = await getArticle(articleName, didAbort);
         setState((prevState) => ({
           ...prevState,
@@ -59,9 +60,9 @@ function SingleArticle(
           isLoading: false,
         }));
       } catch (err: any) {
-        console.log(err);
         setState((prevState) => ({
           ...prevState,
+          isLoading: false,
           errorOnServer: err,
         }));
         // need additional error handling???
@@ -85,6 +86,9 @@ function SingleArticle(
     (async () => {
       await getArticleDetailed(params.article, signal);
     })();
+    return function cleanup() {
+      controller.abort();
+    };
   }, [
     params.article,
     getArticleDetailed,
@@ -95,7 +99,9 @@ function SingleArticle(
   ]);
 
   if (state.errorOnServer || state.wrongUrl) {
-    return <div>ERROR</div>;
+    return (
+      <Error errorOnServer={state.errorOnServer} wrongUrl={state.wrongUrl} />
+    );
   }
 
   const tags =
@@ -110,7 +116,7 @@ function SingleArticle(
     );
 
   const renderedData =
-    !state.isLoading || !state.errorOnServer ? (
+    !state.isLoading && !state.errorOnServer ? (
       (() => (
         <section className={articleStyles.articleFullPage}>
           <header className={articleStyles.articleHeader}>
@@ -149,9 +155,6 @@ function SingleArticle(
       <Spinner />
     );
 
-  // const article = params.article
-  //   ? getArticle(params.article)
-  //   : console.log("ERROR");
   return (
     <>
       <div className={articleStyles.article}>{renderedData}</div>
