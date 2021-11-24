@@ -15,12 +15,13 @@ function ErrorPage(props: any): React.ReactElement | null {
     );
   }
 
-  if (props.errorOnServe) {
+  if (props.errorOnServer) {
     return (
       <article className={errorStyles["error-block"]}>
         <div className={errorStyles.error}>{props.errorOnServer.name}</div>
         <div className={errorStyles.error}>{props.errorOnServer.message}</div>
-        {props.errorOnServer.stack} ?
+        <br />
+        <div className={errorStyles.error}>{props.errorOnServer.stack} ? </div>
       </article>
     );
   }

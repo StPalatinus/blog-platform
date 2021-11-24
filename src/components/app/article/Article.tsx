@@ -28,13 +28,27 @@ function SingleArticle(
   });
 
   console.log(params.article);
-  console.log(props.recievedArticles);
+  // console.log(params.article?.slice(0, 4));
+  // if (params.article?.slice(0, 4) === "REPL") {
+  //   params.article = params.article.splice(0, 4);
+  // }
+
+  const recievedArticleName =
+    params.article?.slice(0, 4) === "REPL"
+      ? params.article.slice(4, params.article.length)
+      : params.article;
+  console.log(recievedArticleName);
+  // console.log(recievedArticleName);
+
+  // const;
+  // console.log(props.recievedArticles);
 
   const isUrlValid = useCallback(
     (articlesToCheck: Article[]) => {
       const res = articlesToCheck.find(
         (article: Article): boolean => article.slug === params.article
       );
+      console.log(!!res);
       return !!res;
     },
     [params.article]
@@ -84,13 +98,13 @@ function SingleArticle(
       }));
     }
     (async () => {
-      await getArticleDetailed(params.article, signal);
+      await getArticleDetailed(recievedArticleName, signal);
     })();
     return function cleanup() {
       controller.abort();
     };
   }, [
-    params.article,
+    recievedArticleName,
     getArticleDetailed,
     isUrlValid,
     props.recievedArticles,

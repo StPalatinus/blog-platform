@@ -29,8 +29,10 @@ function Articles(props: ArticlesType): React.ReactElement {
           <span className={appStyles["tag-empty"]} />
         );
 
-      // const pathName = `${currentArticle.slug.toString()}`;
-      // console.log(currentArticle.slug);
+      if (currentArticle.slug[0] === "-") {
+        currentArticle.slug = `REPL${currentArticle.slug}`;
+      }
+
       return (
         <React.Fragment key={uuidv4()}>
           <article className={appStyles.article} key={uuidv4()}>
@@ -42,6 +44,11 @@ function Articles(props: ArticlesType): React.ReactElement {
               <div className={appStyles["tags-container"]}>{tags}</div>
               <Link
                 to={`${currentArticle.slug}`}
+                // to={{
+                //   pathname: `${currentArticle.slug}`,
+                //   search: `${currentArticle.slug}`,
+                //   hash: `${currentArticle.slug}`,
+                // }}
                 key={currentArticle.slug}
                 className={appStyles.link}
               >
