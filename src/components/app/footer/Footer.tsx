@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Outlet, useParams, Link } from "react-router-dom";
+import { Routes, Route, useParams, Link } from "react-router-dom";
 import { Pagination } from "antd";
 import footerStyles from "./Footer.module.scss";
 
@@ -14,7 +14,7 @@ function Footer(props: Partial<FooterPropsType>): React.ReactElement | null {
   // console.log(params);
   // console.log(params.pagenum);
   const pageNum = params.pagenum ? parseInt(params.pagenum, 10) : 0;
-  // console.log(pageNum);
+  console.log(pageNum);
 
   const onPaginationChange = (evt: any): void => {
     evt.preventDefault();
@@ -55,14 +55,12 @@ function Footer(props: Partial<FooterPropsType>): React.ReactElement | null {
           </Link>
         </li>
       </ul>
-      <Outlet />
     </>
   ) : null;
 
   return (
     <>
       <footer className={footerStyles.footer}>{paginationNav}</footer>
-      {/* <Outlet /> */}
     </>
   );
 }
@@ -100,7 +98,6 @@ export default Footer;
 //   return (
 //     <>
 //       <footer className={footerStyles.footer}>{paginationNav}</footer>
-//       <Outlet />
 //     </>
 //   );
 // }

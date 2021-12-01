@@ -85,7 +85,7 @@ function Articles(props: ArticlesType): React.ReactElement {
               alt="User Avatar"
             />
           </article>
-          <Outlet />
+          {/* <Outlet /> */}
         </React.Fragment>
       );
     })

@@ -1,8 +1,18 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import headerStyles from "./Header.module.scss";
+import { FooterPropsType } from "../../../ts-types/types";
 
-function Header(): React.ReactElement | null {
+import Footer from "../footer";
+
+// function Header(): React.ReactElement | null {
+function Header(props: Partial<FooterPropsType>): React.ReactElement | null {
+  const { isLoading, currentPage, onChange, totalPages, articlesPerPage } =
+    props;
+
+  const params = useParams();
+  console.log(params);
+
   return (
     <>
       <header className={headerStyles.header}>
@@ -25,6 +35,14 @@ function Header(): React.ReactElement | null {
         </button>
       </header>
       <Outlet />
+      <Footer
+        isLoading={isLoading}
+        currentPage={currentPage}
+        // articlesPerPage={state.articlesPerPage}
+        onChange={onChange}
+        totalPages={totalPages}
+        articlesPerPage={articlesPerPage}
+      />{" "}
     </>
   );
 }
