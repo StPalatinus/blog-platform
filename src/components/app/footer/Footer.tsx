@@ -62,7 +62,7 @@ function Footer(props: Partial<FooterPropsType>): React.ReactElement | null {
   return (
     <>
       <footer className={footerStyles.footer}>{paginationNav}</footer>
-      <Outlet />
+      {/* <Outlet /> */}
     </>
   );
 }

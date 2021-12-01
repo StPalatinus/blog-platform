@@ -41,7 +41,6 @@ function SingleArticle(
       const res = articlesToCheck.find(
         (article: Article): boolean => article.slug === params.article
       );
-      console.log(!!res);
       return !!res;
     },
     [params.article]

@@ -52,7 +52,6 @@ function App(): React.ReactElement | null {
   }, [getArticlesPack, state.articlesPerPage, state.currentPage]);
 
   function onChange(pageNumber: number): void {
-    console.log(`pageNumber =${pageNumber}`);
     setState((prevState) => ({
       ...prevState,
       currentPage: pageNumber,
@@ -60,15 +59,14 @@ function App(): React.ReactElement | null {
     }));
   }
 
-  console.log(`state.currentPage on App = ${state.currentPage}`);
-
-  // console.log(state.currentPage);
+  // console.log(`state.currentPage on App = ${state.currentPage}`);
   return (
     <>
       <Routes>
-        <Route path="/articles" element={<Header />}>
+        <Route path="/articles/" element={<Header />}>
           <Route
             path="/articles/:pagenum"
+            // index
             element={
               <>
                 <Articles
@@ -88,7 +86,6 @@ function App(): React.ReactElement | null {
             }
           />
           <Route
-            // path="/articles/:pagenum/:article"
             path="/articles/:pagenum/:article"
             element={
               <Article
@@ -101,11 +98,7 @@ function App(): React.ReactElement | null {
           />
           <Route path="*" element={<div>NOTHING HERE</div>} />
         </Route>
-        <Route path="/" element={<Navigate replace to="/articles/" />} />
-        <Route
-          path="/articles/"
-          element={<Navigate replace to="/articles/1" />}
-        />
+        <Route path="/" element={<Navigate replace to="/articles/1" />} />
         <Route path="*" element={<div>GENERAL ERROR</div>} />
       </Routes>
     </>

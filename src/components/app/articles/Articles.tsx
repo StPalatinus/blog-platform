@@ -7,6 +7,7 @@ import {
   Link,
   NavLink,
   useParams,
+  useMatch,
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import appStyles from "./Articles.module.scss";
@@ -19,8 +20,10 @@ function Articles(props: ArticlesType): React.ReactElement {
   const { isLoading, recievedArticles, currentPage } = props;
 
   const params = useParams();
+  // const match = useMatch("/articles/:pagenum");
   console.log(params);
   console.log(params.pagenum);
+  // console.log(match);
   // eslint-disable-next-line no-restricted-globals
   // console.log(location.pathname);
   // console.log(currentPage);
