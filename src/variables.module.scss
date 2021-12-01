@@ -12,7 +12,11 @@ $GENRAL_HEADER_COLOR: #000;
 
 $DEFAULT_FONT: Inter, Arial, Helvetica, sans-serif;
 
-@mixin tag-default-style {
+@mixin paginationDefaultStyle {
+  // font-size: 150px;
+}
+
+@mixin tagDefaultStyle {
   display: inline-block;
   font-family: Inter;
   font-style: normal;

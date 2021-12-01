@@ -4,6 +4,7 @@ export interface StateType {
   currentPage: number;
   articlesPerPage: number;
   activeArticle: Article[] | null;
+  totalPages: number;
 }
 
 export interface ArticlePageStateType {

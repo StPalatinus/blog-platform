@@ -27,21 +27,14 @@ function SingleArticle(
     wrongUrl: false,
   });
 
-  console.log(params.article);
+  console.log(params);
   // console.log(params.article?.slice(0, 4));
-  // if (params.article?.slice(0, 4) === "REPL") {
-  //   params.article = params.article.splice(0, 4);
-  // }
 
   const recievedArticleName =
     params.article?.slice(0, 4) === "REPL"
       ? params.article.slice(4, params.article.length)
       : params.article;
-  console.log(recievedArticleName);
   // console.log(recievedArticleName);
-
-  // const;
-  // console.log(props.recievedArticles);
 
   const isUrlValid = useCallback(
     (articlesToCheck: Article[]) => {

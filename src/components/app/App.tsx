@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 // import format from "date-fns/format";
 // import { ru } from "date-fns/locale";
 // import { Pagination } from "antd";
@@ -22,7 +22,11 @@ function App(): React.ReactElement | null {
     currentPage: 1,
     articlesPerPage: 5,
     activeArticle: null,
+    totalPages: 50,
   });
+
+  // const params = useParams();
+  // console.log(params);
 
   const getArticlesPack = useCallback(async (articlesPerPage, currentPage) => {
     setState((prevState) => ({
@@ -48,6 +52,7 @@ function App(): React.ReactElement | null {
   }, [getArticlesPack, state.articlesPerPage, state.currentPage]);
 
   function onChange(pageNumber: number): void {
+    console.log(`pageNumber =${pageNumber}`);
     setState((prevState) => ({
       ...prevState,
       currentPage: pageNumber,
@@ -55,12 +60,15 @@ function App(): React.ReactElement | null {
     }));
   }
 
+  console.log(`state.currentPage on App = ${state.currentPage}`);
+
+  // console.log(state.currentPage);
   return (
     <>
       <Routes>
-        <Route path="/" element={<Header />}>
+        <Route path="/articles" element={<Header />}>
           <Route
-            path="/"
+            path="/articles/:pagenum"
             element={
               <>
                 <Articles
@@ -71,14 +79,17 @@ function App(): React.ReactElement | null {
                 <Footer
                   isLoading={state.isLoading}
                   currentPage={state.currentPage}
-                  articlesPerPage={state.articlesPerPage}
+                  // articlesPerPage={state.articlesPerPage}
                   onChange={onChange}
+                  totalPages={state.totalPages}
+                  articlesPerPage={state.articlesPerPage}
                 />
               </>
             }
           />
           <Route
-            path=":article"
+            // path="/articles/:pagenum/:article"
+            path="/articles/:pagenum/:article"
             element={
               <Article
                 recievedArticles={state.recievedArticles}
@@ -90,7 +101,12 @@ function App(): React.ReactElement | null {
           />
           <Route path="*" element={<div>NOTHING HERE</div>} />
         </Route>
-        {/* <Route path="*" element={<div>GENERAL ERROR</div>} /> */}
+        <Route path="/" element={<Navigate replace to="/articles/" />} />
+        <Route
+          path="/articles/"
+          element={<Navigate replace to="/articles/1" />}
+        />
+        <Route path="*" element={<div>GENERAL ERROR</div>} />
       </Routes>
     </>
   );

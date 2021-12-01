@@ -42,11 +42,11 @@
 }
 
 .tag-empty {
-  @include tag-default-style;
+  @include tagDefaultStyle;
 }
 
 .tag-full {
-  @include tag-default-style;
+  @include tagDefaultStyle;
   border: 1px solid $ARTICLE_TAGS_BORDED_DEFAULT_COLOR;
 }
 $variables: #1890ff;

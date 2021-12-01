@@ -22,12 +22,12 @@ class HerokuAppService {
     return articlesPack;
   }
 
-  async getArticle(articleName: string, dodAbort: any) {
+  async getArticle(articleName: string, didAbort: any) {
     const searchUrl = `${BASE_URL}${ARTICLES}/${articleName}`;
 
     try {
       const response = await fetch(searchUrl, {
-        signal: dodAbort,
+        signal: didAbort,
       });
 
       if (!response.ok) {

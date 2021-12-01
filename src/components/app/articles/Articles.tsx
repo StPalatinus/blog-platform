@@ -5,6 +5,8 @@ import {
   Route,
   Outlet,
   Link,
+  NavLink,
+  useParams,
 } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import appStyles from "./Articles.module.scss";
@@ -15,6 +17,13 @@ import { ArticlesType } from "../../../ts-types/types";
 
 function Articles(props: ArticlesType): React.ReactElement {
   const { isLoading, recievedArticles, currentPage } = props;
+
+  const params = useParams();
+  console.log(params);
+  console.log(params.pagenum);
+  // eslint-disable-next-line no-restricted-globals
+  // console.log(location.pathname);
+  // console.log(currentPage);
 
   const renderedData = !isLoading ? (
     recievedArticles?.map((currentArticle) => {
@@ -43,7 +52,8 @@ function Articles(props: ArticlesType): React.ReactElement {
               <div className={appStyles.likes}>0</div>
               <div className={appStyles["tags-container"]}>{tags}</div>
               <Link
-                to={`${currentArticle.slug}`}
+                // to={`${currentArticle.slug}`}
+                to={`/articles/${currentPage}/${currentArticle.slug}`}
                 // to={{
                 //   pathname: `${currentArticle.slug}`,
                 //   search: `${currentArticle.slug}`,
@@ -82,14 +92,15 @@ function Articles(props: ArticlesType): React.ReactElement {
 
   return (
     <>
-      <Routes>
+      {/* <Routes>
         <Route
-          path="/"
-          element={
-            <section className={appStyles.articles}>{renderedData}</section>
-          }
+          // path={`/articles/${currentPage}`}
+          index
+          element={ */}
+      <section className={appStyles.articles}>{renderedData}</section>
+      {/* }
         />
-      </Routes>
+      </Routes> */}
     </>
   );
 }
